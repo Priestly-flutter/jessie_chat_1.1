@@ -81,6 +81,7 @@ export default function AuthForm(){
                         label="Matricule" 
                         register={register} 
                         errors={errors}
+                        disabled={IsLoading}
                     />
                 )}
                  <Input 
@@ -89,6 +90,7 @@ export default function AuthForm(){
                         type="text"
                         register={register} 
                         errors={errors}
+                        disabled={IsLoading}
                     />
                     <Input 
                         id="password" 
@@ -96,6 +98,7 @@ export default function AuthForm(){
                         type="password" 
                         register={register} 
                         errors={errors}
+                        disabled={IsLoading}
                     />
                     <div>
                         <Button
