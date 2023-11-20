@@ -4,6 +4,7 @@ import {BsGithub,BsGoogle} from 'react-icons/bs';
 import AuthSocailButton from "./AuthsocialButton";
 import Input from "@/app/components/input/input";
 import Button from "@/app/components/Button";
+import axios from 'axios';
 import { comment } from "postcss";
 import { useCallback, useState } from "react";
 import { FieldValues,SubmitHandler,useForm } from "react-hook-form";
@@ -41,8 +42,12 @@ export default function AuthForm(){
 
         if(variant === 'LOGIN'){
             //NextAuth Login_Sign_in
-        }else if(variant === 'JOIN US'){
+            
+        }
+
+        if(variant === 'JOIN US'){
             //Axios Join Us
+            axios.post('api/register',data)
         }
     }
     const socialAction = (action: string)=>{
