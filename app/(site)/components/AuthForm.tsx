@@ -6,14 +6,28 @@ import Input from "@/app/components/input/input";
 import Button from "@/app/components/Button";
 import axios from 'axios';
 import { comment } from "postcss";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FieldValues,SubmitHandler,useForm } from "react-hook-form";
+import { toast } from 'react-hot-toast';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type Variant = 'LOGIN' | 'JOIN US';
 
 export default function AuthForm(){
+    //using the session hook
+    const session = useSession();
+    //adding router to route to next page after auth is true
+    const router = useRouter();
     const [variant, setVariant] = useState<Variant>('LOGIN');
     const [IsLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if(session?.status ==='authenticated'){
+            //routing to the new page if conditions are met
+            router.push('/Users');
+        }
+    },[session?.status,router]);
 
     const toggleVariant = useCallback(() => {
         if (variant === 'LOGIN'){
@@ -42,18 +56,50 @@ export default function AuthForm(){
 
         if(variant === 'LOGIN'){
             //NextAuth Login_Sign_in
+            signIn('credentials', {
+                ...data,
+                redirect: false
+            })
+            .then((callback)=>{
+                if(callback?.error){
+                    toast.error('well it looks like you made a mistake or you do not have an account');
+                }
+
+                if(callback?.ok && !callback?.error){
+                    toast.success('you are in')
+                    router.push('/Users');
+                 }
+            })
+            .finally(() => setIsLoading(false));
             
         }
 
         if(variant === 'JOIN US'){
             //Axios Join Us
             axios.post('api/register',data)
+            .then(() => signIn('credentials',data))
+            .catch(() => toast.error('Well it looks like our engineers started dating and forgot about their job.  we are sorry about that!'))
+            .finally(() => setIsLoading(false))
         }
     }
     const socialAction = (action: string)=>{
         setIsLoading(true);
-
         //NextAuth Social Instiution Sign in
+
+        signIn(action, {
+            redirect:false
+        })
+        .then((callback) =>{
+            if(callback?.error){
+                toast.error('Invalid Credentials');
+            }
+
+            if(callback?.ok && !callback?.error){
+                toast.success('You are in!')
+            }
+        })
+        .finally(() => setIsLoading(false));
+
     }
 
     return (
@@ -79,7 +125,6 @@ export default function AuthForm(){
             className="space-y-6"
             onSubmit={handleSubmit(onSubmit)}
             >
-
                 {variant === 'JOIN US' && (
                     <Input 
                         id="matricule" 
@@ -88,6 +133,7 @@ export default function AuthForm(){
                         errors={errors}
                         disabled={IsLoading}
                     />
+
                 )}
                  <Input 
                         id="name" 
@@ -147,12 +193,12 @@ export default function AuthForm(){
                                     text-gray-500
                                 "
                             >
-                                Or continue with
+                               Coming soon
                             </span>
                         </div>
                     </div>
-
-                    <div className="mt-6 flex gap2">
+{/*add function when you've mastered how api work*/}
+                    {/*<div className="mt-6 flex gap2">
                         <AuthSocailButton 
                             icon={BsGithub}
                             onClick={() => socialAction('github')}
@@ -161,7 +207,7 @@ export default function AuthForm(){
                             icon={BsGoogle}
                             onClick={() => socialAction('google')}
                         />
-                    </div>
+                </div>*/}
 
                 </div>
                 <div className="
