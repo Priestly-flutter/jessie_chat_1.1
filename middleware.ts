@@ -13,4 +13,4 @@ export const config = {
     matcher:[
         "/Users/:path*"
     ]
-}
+};
