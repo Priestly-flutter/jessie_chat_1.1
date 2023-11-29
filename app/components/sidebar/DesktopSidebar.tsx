@@ -4,6 +4,7 @@ import useRoutes from "@/app/hooks/useRoutes";
 import { useState } from "react";
 import DesktopItem from "./DesktopItem";
 
+
 const DesktopSidebar = () =>{
     const routes = useRoutes();
     const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +17,10 @@ const DesktopSidebar = () =>{
             lg:inset-y-0
             lg:left-0
             lg:z-40
-            lg:w-20
+            lg:w-30
             xl:px-6
             lg:overflow-y-auto
-            lg:bg-white
+            lg:bg-grey-300
             lg:border-r[10px]
             lg:pb-4
             lg:flex
@@ -44,7 +45,7 @@ const DesktopSidebar = () =>{
                             key= {item.label}
                             href={item.href}
                             label={item.label}
-                            icon={item.active}
+                            icon={item.icon}
                             active={item.active}
                             onClick = {item.onClick}
                         />

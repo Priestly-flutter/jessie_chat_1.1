@@ -21,9 +21,9 @@ const useRoutes = () => {
         },
         {
             label: 'Users',
-            href: '/users',
+            href: '/Users',
             icon: HiUsers,
-            active: pathname === '/users'
+            active: pathname === '/Users'
         },
         {
             label: 'Logout',
