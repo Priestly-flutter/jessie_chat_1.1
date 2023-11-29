@@ -3,12 +3,23 @@
 import useRoutes from "@/app/hooks/useRoutes";
 import { useState } from "react";
 import DesktopItem from "./DesktopItem";
+import { User } from "@prisma/client";
 
 
-const DesktopSidebar = () =>{
+//defining props that will accept the current user
+
+interface DesktopSidebarProps {
+    currentUser: User;
+}
+const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
+    currentUser
+}) =>{
+    
     const routes = useRoutes();
     const [isOpen, setIsOpen] = useState(false);
 
+    //will console log the user's email. change to console log the user's name
+    console.log({currentUser})
 
     return(
         <div className="

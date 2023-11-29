@@ -2,7 +2,7 @@
 
 import {BsGithub,BsGoogle} from 'react-icons/bs';
 import AuthSocailButton from "./AuthsocialButton";
-import Input from "@/app/components/input/input";
+import Input from '@/app/components/input/input';
 import Button from "@/app/components/Button";
 import axios from 'axios';
 import { comment } from "postcss";
@@ -127,21 +127,37 @@ export default function AuthForm(){
             >
                 {variant === 'JOIN US' && (
                     <Input 
-                        id="matricule" 
-                        label="Matricule" 
+                        id="name" 
+                        label="Name" 
                         register={register} 
                         errors={errors}
                         disabled={IsLoading}
+                        required="true"
+                        type="text"
+                    />
+
+                )}
+                {variant === 'JOIN US' && (
+                    <Input 
+                        id="email" 
+                        label="Email" 
+                        register={register} 
+                        errors={errors}
+                        disabled={IsLoading}
+                        required="true"
+                        type="text"
                     />
 
                 )}
                  <Input 
-                        id="name" 
-                        label="Name" 
+                        id="matricule" 
+                        label="Matricule" 
                         type="text"
                         register={register} 
                         errors={errors}
                         disabled={IsLoading}
+                        required="true"
+                        
                     />
                     <Input 
                         id="password" 
@@ -150,6 +166,7 @@ export default function AuthForm(){
                         register={register} 
                         errors={errors}
                         disabled={IsLoading}
+                        required="true"
                     />
                     <div>
                         <Button
